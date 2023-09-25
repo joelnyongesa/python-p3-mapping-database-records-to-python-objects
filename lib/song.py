@@ -49,3 +49,25 @@ class Song:
         return song
 
     # new code goes here!
+    @classmethod
+    def new_from_db(cls, row):
+        song = cls(row[1], row[2])
+        song.id = row[0]
+
+    @classmethod
+    def all(cls):
+        sql = """
+            SELECT *
+            FROM songs
+        """
+        all = CURSOR.execute(sql).fetchall()
+
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT *
+            FROM songs
+        """
+
+        all = CURSOR.execute(sql).fetchall()
+        cls.all = [cls.new_from_db(row) for row in all]
